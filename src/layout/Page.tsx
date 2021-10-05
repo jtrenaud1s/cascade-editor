@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import Editor from "../components/Editor";
+import AssetEditor from "../components/AssetEditor";
 import NavBar from "./NavBar";
 
 const Page = () => {
@@ -8,7 +8,7 @@ const Page = () => {
     <div>
       <NavBar />
       <Container>
-        <Editor />
+        <AssetEditor />
       </Container>
     </div>
   );
