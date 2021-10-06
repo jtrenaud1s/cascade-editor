@@ -5,8 +5,8 @@ import { readPage, savePage } from "../api/CascadeConnector";
 import { AuthContext } from "../contexts/AuthContext";
 
 import Editor from "react-simple-code-editor";
-import Prism from 'prismjs'
-import 'prismjs/components/prism-json'
+import Prism from "prismjs";
+import "prismjs/components/prism-json";
 import "prismjs/themes/prism.css";
 
 const AssetEditor = () => {
@@ -72,17 +72,23 @@ const AssetEditor = () => {
         </InputGroup>
 
         <Editor
-      value={JSON.stringify(editorContents, null, 2)}
-      onValueChange={(e) => {setEditorContents(JSON.parse(e));}}
-      highlight={(code) => Prism.highlight(code, Prism.languages.json, 'json')}
-      padding={10}
-      minLength={30}
-      style={{
-        fontFamily: '"Fira code", "Fira Mono", monospace',
-        fontSize: 12,
-      }}
-    />
-
+          className="mt-2"
+          value={JSON.stringify(editorContents, null, 2)}
+          onValueChange={(e) => {
+            setEditorContents(JSON.parse(e));
+          }}
+          highlight={(code) =>
+            Prism.highlight(code, Prism.languages.json, "json")
+          }
+          padding={10}
+          minLength={30}
+          style={{
+            fontFamily: '"Fira code", "Fira Mono", monospace',
+            fontSize: 12,
+            border: "1px solid black",
+            borderRadius: "5px",
+          }}
+        />
       </form>
     </div>
   );
