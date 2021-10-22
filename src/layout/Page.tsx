@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import AssetEditor from "../components/AssetEditor";
 import NavBar from "./NavBar";
+import Demo from '../components/Demo'
 
 const Page = () => {
   return (
@@ -9,6 +10,7 @@ const Page = () => {
       <NavBar />
       <Container>
         <AssetEditor />
+        <Demo />
       </Container>
     </div>
   );

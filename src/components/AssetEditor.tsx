@@ -28,6 +28,7 @@ const AssetEditor = () => {
             value={assetType}
           >
             <option value="page">Page</option>
+            <option value="block">Block</option>
           </Form.Control>
           <Form.Control
             type="text"
