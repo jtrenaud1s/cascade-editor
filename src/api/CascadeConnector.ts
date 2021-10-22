@@ -13,23 +13,25 @@ const generateEndpointUrl = (
   return `https://${API_HOST}/${API_PATH}/${action}/${type}/${id}/?u=${username}&p=${password}`;
 };
 
-export const readPage = async (
+export const readAsset = async (
   id: string,
+  type: string,
   username: string,
   password: string
 ) => {
-  const endpoint = generateEndpointUrl("read", "page", id, username, password);
+  const endpoint = generateEndpointUrl("read", type, id, username, password);
   const response = await fetch(endpoint);
   return response.json();
 };
 
-export const savePage = async (
+export const saveAsset = async (
   id: string,
+  type: string,
   contents: MajorAsset,
   username: string,
   password: string
 ) => {
-  const endpoint = generateEndpointUrl("edit", "page", id, username, password);
+  const endpoint = generateEndpointUrl("edit", type, id, username, password);
 
   const requestOptions = {
     method: "POST",

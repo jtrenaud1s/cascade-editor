@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { EditorContext } from "../contexts/EditorContext";
-import { readPage, savePage } from "../api/CascadeConnector";
+import { readAsset, saveAsset } from "../api/CascadeConnector";
 import { AuthContext } from "../contexts/AuthContext";
 
 import Editor from "react-simple-code-editor";
@@ -44,7 +44,7 @@ const AssetEditor = () => {
           <Button
             className="mt-2"
             onClick={(e) => {
-              readPage(id, authContext.username, authContext.password).then(
+              readAsset(id, assetType, authContext.username, authContext.password).then(
                 (contents) => {
                   setEditorContents(contents);
                 }
@@ -58,8 +58,9 @@ const AssetEditor = () => {
             className="mt-2"
             variant="success"
             onClick={(e) => {
-              savePage(
+              saveAsset(
                 id,
+                assetType,
                 editorContents,
                 authContext.username,
                 authContext.password
