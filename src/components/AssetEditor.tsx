@@ -38,7 +38,7 @@ const AssetEditor = () => {
             onChange={(e) => {
               setId(e.target.value);
             }}
-            placeholder="Asset ID: ceddad4196c98f635de775fde2f66882"
+            placeholder="Asset ID (e.g. : ceddad4196c98f635de775fde2f66882)"
           />
         </InputGroup>
 
