@@ -4,10 +4,12 @@ import { EditorContext } from "../contexts/EditorContext";
 import { readAsset, saveAsset } from "../api/CascadeConnector";
 import { AuthContext } from "../contexts/AuthContext";
 
-import Editor from "react-simple-code-editor";
-import Prism from "prismjs";
-import "prismjs/components/prism-json";
-import "prismjs/themes/prism.css";
+
+import brace from "brace";
+import AceEditor from "react-ace";
+
+import "brace/mode/json";
+import "brace/theme/pastel_on_dark";
 
 const AssetEditor = () => {
   const { editorContents, setEditorContents, assetType, setAssetType } =
@@ -44,11 +46,14 @@ const AssetEditor = () => {
           <Button
             className="mt-2"
             onClick={(e) => {
-              readAsset(id, assetType, authContext.username, authContext.password).then(
-                (contents) => {
-                  setEditorContents(contents);
-                }
-              );
+              readAsset(
+                id,
+                assetType,
+                authContext.username,
+                authContext.password
+              ).then((contents) => {
+                setEditorContents(contents);
+              });
             }}
           >
             Load
@@ -73,23 +78,18 @@ const AssetEditor = () => {
           </Button>
         </InputGroup>
 
-        <Editor
-          className="mt-2"
-          value={JSON.stringify(editorContents, null, 2)}
-          onValueChange={(e) => {
+        <AceEditor
+          mode="json"
+          theme="pastel_on_dark"
+          onChange={(e: string) => {
             setEditorContents(JSON.parse(e));
           }}
-          highlight={(code) =>
-            Prism.highlight(code, Prism.languages.json, "json")
-          }
-          padding={10}
-          minLength={30}
-          style={{
-            fontFamily: '"Fira code", "Fira Mono", monospace',
-            fontSize: 12,
-            border: "1px solid black",
-            borderRadius: "5px",
-          }}
+          className="mt-2"
+          name="UNIQUE_ID_OF_DIV"
+          editorProps={{ $blockScrolling: true }}
+          width="100%"
+          height="700px"
+          value={JSON.stringify(editorContents, null, 2)}
         />
       </form>
     </div>
