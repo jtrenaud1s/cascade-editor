@@ -8,8 +8,9 @@ const Page = () => {
     <div>
       <NavBar />
       <Container>
-        <Alert variant="warning">
-          <p><strong>Note:</strong> This utility only works on assets that do <i>NOT</i> require a workflow to be selected. Remove the requirement from the file/folder if there is one before trying to save the file.</p>
+        <Alert className="mt-2" variant="warning">
+          <strong>Note:</strong><br />
+          <span>This utility only works on assets that do <i>NOT</i> require a workflow to be selected. Remove the requirement from the file/folder if there is one before trying to save the file.</span>
         </Alert>
         <AssetEditor />
       </Container>
