@@ -1,22 +1,23 @@
 import React, { useContext, useState } from "react";
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, Form, InputGroup, ToastContainer } from "react-bootstrap";
 import { EditorContext } from "../contexts/EditorContext";
 import { readAsset, saveAsset } from "../api/CascadeConnector";
 import { AuthContext } from "../contexts/AuthContext";
 
-
-// import brace from "brace";
 import AceEditor from "react-ace";
 
 import "brace/mode/json";
 import "brace/theme/pastel_on_dark";
+import AutoToast from "./AutoToast";
+import { ErrorContext } from "../contexts/ErrorContext";
 
 const AssetEditor = () => {
-  const { editorContents, setEditorContents, assetType, setAssetType } =
-    useContext(EditorContext);
   const [id, setId] = useState("");
 
+  const { editorContents, setEditorContents, assetType, setAssetType } =
+    useContext(EditorContext);
   const authContext = useContext(AuthContext);
+  const errorContext = useContext(ErrorContext);
 
   return (
     <div className="mt-2">
@@ -52,7 +53,12 @@ const AssetEditor = () => {
                 authContext.username,
                 authContext.password
               ).then((contents) => {
-                setEditorContents(contents);
+                if (contents.success)
+                  setEditorContents(JSON.stringify(contents, null, 2));
+                else {
+                  console.log(contents.message);
+                  errorContext.addError(contents.message);
+                }
               });
             }}
           >
@@ -66,7 +72,7 @@ const AssetEditor = () => {
               saveAsset(
                 id,
                 assetType,
-                editorContents,
+                JSON.parse(editorContents),
                 authContext.username,
                 authContext.password
               ).then((response) => {
@@ -82,16 +88,27 @@ const AssetEditor = () => {
           mode="json"
           theme="pastel_on_dark"
           onChange={(e: string) => {
-            setEditorContents(JSON.parse(e));
+            setEditorContents(e);
           }}
           className="mt-2"
           name="UNIQUE_ID_OF_DIV"
           editorProps={{ $blockScrolling: true }}
           width="100%"
           height="700px"
-          value={JSON.stringify(editorContents, null, 2)}
+          value={editorContents}
         />
+        <ToastContainer className="p-3" position="bottom-end">
+        {errorContext.errors.map((err) => (
+          <AutoToast
+            title="Error"
+            message={err.message}
+            key={err.id}
+            id={err.id}
+          />
+        ))}
+      </ToastContainer>
       </form>
+      
     </div>
   );
 };
