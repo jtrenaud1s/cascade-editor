@@ -1,14 +1,15 @@
 import React, { useContext, useState } from "react";
-import { Toast, ToastContainer } from "react-bootstrap";
+import { Toast } from "react-bootstrap";
 import { ErrorContext } from "../contexts/ErrorContext";
 
 interface IAutoToastProps {
   title: string;
   message: string;
   id: number;
+  delay?: number
 }
 
-const AutoToast = ({ title, message, id }: IAutoToastProps) => {
+const AutoToast = ({ title, message, id, delay=5000 }: IAutoToastProps) => {
   const [show, setShow] = useState(true);
   const errorContext = useContext(ErrorContext);
 
@@ -20,10 +21,10 @@ const AutoToast = ({ title, message, id }: IAutoToastProps) => {
   return (
     
       <Toast
-        style={{ zIndex: 999 }}
+        style={{ zIndex: 7 }}
         onClose={close}
         show={show}
-        delay={3000}
+        delay={delay}
         autohide
       >
         <Toast.Header>

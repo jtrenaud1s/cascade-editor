@@ -76,7 +76,10 @@ const AssetEditor = () => {
                 authContext.username,
                 authContext.password
               ).then((response) => {
-                alert(JSON.stringify(response, null, 2));
+                if(response.success)
+                  errorContext.addError("Saved File Successfully!")
+                else
+                  errorContext.addError(response.message)
               });
             }}
           >
@@ -97,7 +100,7 @@ const AssetEditor = () => {
           height="700px"
           value={editorContents}
         />
-        <ToastContainer className="p-3" position="bottom-end">
+        <ToastContainer style={{zIndex: 10}} className="p-3" position="bottom-end">
         {errorContext.errors.map((err) => (
           <AutoToast
             title="Error"
