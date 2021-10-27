@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Toast } from "react-bootstrap";
-import { ErrorContext } from "../contexts/ErrorContext";
+import { NotificationContext } from "../contexts/NotificationContext";
 
 interface IAutoToastProps {
   title: string;
@@ -11,11 +11,11 @@ interface IAutoToastProps {
 
 const AutoToast = ({ title, message, id, delay=5000 }: IAutoToastProps) => {
   const [show, setShow] = useState(true);
-  const errorContext = useContext(ErrorContext);
+  const notificationContext = useContext(NotificationContext);
 
   const close = () => {
     setShow(false);
-    errorContext.removeError(id);
+    notificationContext.removeNotification(id);
   };
 
   return (

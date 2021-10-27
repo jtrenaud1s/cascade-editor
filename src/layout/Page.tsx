@@ -1,6 +1,7 @@
 import React from "react";
 import { Alert, Container } from "react-bootstrap";
 import AssetEditor from "../components/AssetEditor";
+import NotificationContainer from "../components/NotificationContainer";
 import NavBar from "./NavBar";
 
 const Page = () => {
@@ -13,6 +14,7 @@ const Page = () => {
           <span>This utility only works on assets that do <i>NOT</i> require a workflow to be selected. Remove the requirement from the file/folder if there is one before trying to save the file.</span>
         </Alert>
         <AssetEditor />
+        <NotificationContainer />
       </Container>
     </div>
   );

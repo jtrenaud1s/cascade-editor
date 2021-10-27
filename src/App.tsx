@@ -1,7 +1,7 @@
 import React from "react";
 import AuthContextProvider from "./contexts/AuthContext";
 import EditorProvider from "./contexts/EditorContext";
-import ErrorProvider from "./contexts/ErrorContext";
+import ErrorProvider from "./contexts/NotificationContext";
 import Page from "./layout/Page";
 
 const App = () => {

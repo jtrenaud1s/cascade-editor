@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Button, Form, InputGroup, ToastContainer } from "react-bootstrap";
+import { useContext, useState } from "react";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import { EditorContext } from "../contexts/EditorContext";
 import { readAsset, saveAsset } from "../api/CascadeConnector";
 import { AuthContext } from "../contexts/AuthContext";
@@ -8,8 +8,7 @@ import AceEditor from "react-ace";
 
 import "brace/mode/json";
 import "brace/theme/pastel_on_dark";
-import AutoToast from "./AutoToast";
-import { ErrorContext } from "../contexts/ErrorContext";
+import { NotificationContext } from "../contexts/NotificationContext";
 
 const AssetEditor = () => {
   const [id, setId] = useState("");
@@ -17,7 +16,7 @@ const AssetEditor = () => {
   const { editorContents, setEditorContents, assetType, setAssetType } =
     useContext(EditorContext);
   const authContext = useContext(AuthContext);
-  const errorContext = useContext(ErrorContext);
+  const notificationContext = useContext(NotificationContext);
 
   return (
     <div className="mt-2">
@@ -53,11 +52,12 @@ const AssetEditor = () => {
                 authContext.username,
                 authContext.password
               ).then((contents) => {
-                if (contents.success)
+                if (contents.success) {
                   setEditorContents(JSON.stringify(contents, null, 2));
-                else {
+                  notificationContext.addNotification("Success", "Asset Loaded Successfully");
+                } else {
                   console.log(contents.message);
-                  errorContext.addError(contents.message);
+                  notificationContext.addNotification("Error", contents.message);
                 }
               });
             }}
@@ -76,10 +76,9 @@ const AssetEditor = () => {
                 authContext.username,
                 authContext.password
               ).then((response) => {
-                if(response.success)
-                  errorContext.addError("Saved File Successfully!")
-                else
-                  errorContext.addError(response.message)
+                if (response.success)
+                  notificationContext.addNotification("Success", "Saved File Successfully!");
+                else notificationContext.addNotification("Error", response.message);
               });
             }}
           >
@@ -100,18 +99,7 @@ const AssetEditor = () => {
           height="700px"
           value={editorContents}
         />
-        <ToastContainer style={{zIndex: 10}} className="p-3" position="bottom-end">
-        {errorContext.errors.map((err) => (
-          <AutoToast
-            title="Error"
-            message={err.message}
-            key={err.id}
-            id={err.id}
-          />
-        ))}
-      </ToastContainer>
       </form>
-      
     </div>
   );
 };
